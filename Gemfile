@@ -44,6 +44,11 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
+group :test do
+  gem 'webmock', '~> 1.17.4'
+  gem 'database_cleaner'
+end
+
 group :production do
   gem 'rails_12factor'
 end

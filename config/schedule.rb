@@ -1,6 +1,6 @@
-RETWEET_CALCULATOR_RECURRING_TIME = 1.minute
+TWEET_DESTROY_WORKER_RECUR_TIME = 1.day
 
-# Run background job to calculate most popular retweets
-every RETWEET_CALCULATOR_RECURRING_TIME do
-  runner "RetweetCalculatorWorker.perform_async"
+# Run background job to remove old tweets
+every TWEET_DESTROY_WORKER_RECUR_TIME do
+  runner "TweetDestroyWorker.perform_async"
 end
