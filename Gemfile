@@ -18,6 +18,11 @@ gem 'oauth'
 #KEYS
 gem 'figaro'
 
+#QUEUES
+gem 'sidekiq', '~> 3.0.1'
+gem 'sinatra'
+gem 'slim'
+
 #JSON
 gem 'multi_json'
 
@@ -34,6 +39,10 @@ gem 'jbuilder', '~> 2.0'
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 #STANDARD RAILS STUFF
