@@ -12,7 +12,11 @@ gem 'unicorn'
 gem 'thin', group: :development
 
 #API
-gem 'tweetstream'
+gem 'twitter'
+gem 'oauth'
+
+#KEYS
+gem 'figaro'
 
 #JSON
 gem 'multi_json'

@@ -52,28 +52,17 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     connection_pool (2.0.0)
-    cookiejar (0.3.2)
     daemons (1.1.9)
     diff-lcs (1.2.5)
-    em-http-request (1.1.2)
-      addressable (>= 2.3.4)
-      cookiejar
-      em-socksify (>= 0.3)
-      eventmachine (>= 1.0.3)
-      http_parser.rb (>= 0.6.0)
-    em-socksify (0.3.0)
-      eventmachine (>= 1.0.0.beta.4)
-    em-twitter (0.3.3)
-      buftok (~> 0.2)
-      eventmachine (~> 1.0)
-      http_parser.rb (~> 0.6)
-      simple_oauth (~> 0.2)
     equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -109,6 +98,7 @@ GEM
     multi_json (1.10.0)
     multipart-post (2.0.0)
     naught (1.0.0)
+    oauth (0.4.7)
     optionable (0.2.0)
     origin (2.1.1)
     polyglot (0.3.4)
@@ -182,12 +172,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tweetstream (2.6.1)
-      daemons (~> 1.1)
-      em-http-request (>= 1.1.1)
-      em-twitter (~> 0.3)
-      multi_json (~> 1.3)
-      twitter (~> 5.5)
     twitter (5.8.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -215,11 +199,13 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   coffee-rails (~> 4.0.0)
+  figaro
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
   mongoid (~> 4.0.0.beta1)!
   multi_json
+  oauth
   pry
   rails (= 4.1.0)
   redis
@@ -228,6 +214,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   thin
-  tweetstream
+  twitter
   uglifier (>= 1.3.0)
   unicorn
