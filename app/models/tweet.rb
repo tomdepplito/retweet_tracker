@@ -16,7 +16,7 @@ class Tweet
   # This method will query MongoDB for the most retweeted tweets
   # within a given time window.  The starting_time argument should be
   # an instance of Time that represents how far into the past the query
-  # should search.  The top_count argument indicated how many records
+  # should search.  The top_count argument indicates how many records
   # (in descending order) should be returned.
   def self.calculate_most_retweeted(starting_time, top_count)
     map     = %Q{
