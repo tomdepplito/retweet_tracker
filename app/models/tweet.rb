@@ -13,7 +13,6 @@ class Tweet
     map     = %Q{
                   var key = this.twitter_id;
                   var value = {
-                                 twitterID: key,
                                  retweetCount: this.retweet_count,
                                  text: this.text
                                };
@@ -21,25 +20,15 @@ class Tweet
                 }
 
     reduce  = %Q{ function(key, values) {
-                    var reducedObject = {
-                                          twitterID: key,
-                                          text: values[0].text,
-                                          retweetCount: 0
-                                         };
+                    var min, max, sortedValues;
+                    var reducedObject = {text: values[0].text};
 
-                    var min = max = values[0].retweetCount;
-
-                    values.forEach(function(value) {
-                      var currentCount = value.retweetCount;
-
-                      if(currentCount > max) {
-                        max = currentCount;
-                      }
-
-                      if(currentCount < min) {
-                        min = currentCount;
-                      }
+                    sortedValues = values.sort(function(valA, valB) {
+                      return valB.retweetCount > valA.retweetCount;
                     });
+
+                    min = sortedValues[values.length - 1].retweetCount;
+                    max = sortedValues[0].retweetCount
 
                     reducedObject.retweetCount = max - min;
                     return reducedObject;
@@ -48,8 +37,8 @@ class Tweet
 
     Tweet.gte(read_time: Time.now - time_window).
       map_reduce(map, reduce).out(inline: true).
-      sort_by do |a,b|
-        b.try([:value]).try([:retweetCount]) <=> a.try([:value]).try([:retweetCount])
+      sort do |a, b|
+        b['value']['retweetCount'] <=> a['value']['retweetCount']
       end[0..top_count-1]
   end
 end
