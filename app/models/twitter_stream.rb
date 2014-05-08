@@ -1,4 +1,4 @@
-# This class enables access to Twitter's streaming API
+# This class enables access to Twitter's streaming API.
 
 class TwitterStream
 

@@ -1,3 +1,5 @@
+# This class encapsulates all information pertaining to a tweet.
+
 class Tweet
   include Mongoid::Document
 
@@ -9,6 +11,11 @@ class Tweet
   validates_presence_of :twitter_id, :text, :read_time
   validates_numericality_of :retweet_count
 
+  # This method will query MongoDB for the most retweeted tweets
+  # within a given time window.  The time_window argument should be
+  # an instance of Time that represents how far into the past the query
+  # should search.  The top_count argument indicated how many records
+  # (in descending order) should be returned.
   def self.most_retweeted(time_window, top_count)
     map     = %Q{
                   var key = this.twitter_id;
@@ -23,6 +30,12 @@ class Tweet
                     var min, max, sortedValues;
                     var reducedObject = {text: values[0].text};
 
+                    /*
+                      Sort the retweet counts in descending order,
+                      then find the delta between min and max to
+                      calculate the number of retweets in
+                      the given time period per twitter_id.
+                    */
                     sortedValues = values.sort(function(valA, valB) {
                       return valB.retweetCount > valA.retweetCount;
                     });
@@ -35,6 +48,7 @@ class Tweet
                   };
                 }
 
+    # Select tweets within the time window then run the map reduce query.
     Tweet.gte(read_time: Time.now - time_window).
       map_reduce(map, reduce).out(inline: true).
       sort do |a, b|
