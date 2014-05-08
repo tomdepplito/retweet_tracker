@@ -23,6 +23,9 @@ gem 'sidekiq', '~> 3.0.1'
 gem 'sinatra'
 gem 'slim'
 
+#JOBS
+gem 'whenever', :require => false
+
 #JSON
 gem 'multi_json'
 

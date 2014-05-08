@@ -11,12 +11,14 @@ class Tweet
   validates_presence_of :twitter_id, :text, :read_time
   validates_numericality_of :retweet_count
 
+  DEFAULT_TIME_WINDOW = 1.minute
+
   # This method will query MongoDB for the most retweeted tweets
-  # within a given time window.  The time_window argument should be
+  # within a given time window.  The starting_time argument should be
   # an instance of Time that represents how far into the past the query
   # should search.  The top_count argument indicated how many records
   # (in descending order) should be returned.
-  def self.most_retweeted(time_window, top_count)
+  def self.calculate_most_retweeted(starting_time, top_count)
     map     = %Q{
                   var key = this.twitter_id;
                   var value = {
@@ -49,7 +51,8 @@ class Tweet
                 }
 
     # Select tweets within the time window then run the map reduce query.
-    Tweet.gte(read_time: Time.now - time_window).
+    Tweet.where(:read_time.gte => starting_time,
+                :read_time.lt => starting_time + DEFAULT_TIME_WINDOW).
       map_reduce(map, reduce).out(inline: true).
       sort do |a, b|
         b['value']['retweetCount'] <=> a['value']['retweetCount']
