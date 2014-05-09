@@ -11,6 +11,7 @@ class Tweet
   validates_presence_of :twitter_id, :text, :read_time
   validates_numericality_of :retweet_count
 
+  DEFAULT_TOP_COUNT = 10
   TWEET_PERSISTENCE_WINDOW = 7.days
 
   # This method will query MongoDB for the most retweeted tweets
@@ -18,7 +19,7 @@ class Tweet
   # an instance of Time that represents how far into the past the query
   # should search.  The top_count argument indicates how many records
   # (in descending order) should be returned.
-  def self.calculate_most_retweeted(starting_time, top_count=10)
+  def self.calculate_most_retweeted(starting_time, top_count = DEFAULT_TOP_COUNT)
     map     = %Q{
                   var key = this.twitter_id;
                   var value = {
