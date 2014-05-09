@@ -23,11 +23,10 @@ class TwitterStream
       case object
       when Twitter::Tweet
         if object.retweet_count > 0
-          tweet = Tweet.new(retweet_count: object.retweet_count,
-                            text: object.text,
-                            twitter_id: object.id,
-                            read_time: Time.now)
-          tweet.save
+          Tweet.create(retweet_count: object.retweet_count,
+                       text: object.text,
+                       twitter_id: object.id,
+                       read_time: Time.now)
         end
       end
     end
