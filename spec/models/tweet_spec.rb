@@ -62,12 +62,18 @@ describe Tweet do
                      read_time: @tweet_read_time,
                      retweet_count: 10
                    }
-      populate_db(tweet_info)
+      populate_db(tweet_info, tweet_info.merge(read_time: Time.now))
     end
 
-    it 'removes only tweets that are older than the time persistence window' do
+    it 'removes tweets that are older than the time persistence window' do
       Tweet.destroy_outdated_tweets!
       Tweet.where(:read_time.lte => @tweet_read_time).count.should == 0
+    end
+
+    it 'does not remove tweets that were read within the time persistence window' do
+      tweet_count = Tweet.where(:read_time.gt => @tweet_read_time).count
+      Tweet.destroy_outdated_tweets!
+      Tweet.count.should == tweet_count
     end
   end
 
