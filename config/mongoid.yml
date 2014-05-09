@@ -58,7 +58,7 @@ development:
 test:
   sessions:
     default:
-      database: retweet_tracker_test
+      database: retweet_tracker_development
       hosts:
         - localhost:27017
       options:
