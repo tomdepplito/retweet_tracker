@@ -77,6 +77,7 @@ describe Tweet do
     end
   end
 
+  # This method creates instances of the Tweet class in MongoDB for testing
   def populate_db(*args)
     args.each do |tweet_info|
       Tweet.create(tweet_info)
